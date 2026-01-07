@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+:root {
+  --color-dark-bg: #050505;
+  --color-card-bg: #121212;
+  --color-accent-primary: #dc2626; /* Crimson Red */
+  --color-accent-glow: rgba(220, 38, 38, 0.5);
+}
+
+/* Global Reset */
+body {
+  background-color: var(--color-dark-bg);
+  color: #e5e5e5;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}

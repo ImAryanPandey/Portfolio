@@ -27,7 +27,7 @@ const Stats = () => {
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                className="md:col-span-2 bg-gradient-to-br from-white/10 to-black/50 border border-white/10 rounded-2xl p-8 relative overflow-hidden group"
+                className="md:col-span-2 bg-linear-to-br from-white/10 to-black/50 border border-white/10 rounded-2xl p-8 relative overflow-hidden group"
             >
                 <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                     <Zap size={120} />
@@ -51,7 +51,7 @@ const Stats = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
-                className="md:row-span-2 bg-gradient-to-br from-green-900/20 to-black/50 border border-green-500/20 rounded-2xl p-6 flex flex-col h-full"
+                className="md:row-span-2 bg-linear-to-br from-green-900/20 to-black/50 border border-green-500/20 rounded-2xl p-6 flex flex-col h-full"
             >
                 <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
                     <Server className="text-green-500" size={20}/> Arsenal
@@ -82,7 +82,7 @@ const Stats = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
-                className="bg-gradient-to-br from-yellow-900/20 to-black/50 border border-yellow-500/20 rounded-2xl p-6 hover:border-yellow-500/40 transition-colors"
+                className="bg-linear-to-br from-yellow-900/20 to-black/50 border border-yellow-500/20 rounded-2xl p-6 hover:border-yellow-500/40 transition-colors"
             >
                 <div className="flex items-center gap-3 mb-4">
                     <div className="p-2 bg-yellow-500/10 rounded-lg">
@@ -102,7 +102,7 @@ const Stats = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.3 }}
-                className="bg-gradient-to-br from-blue-900/20 to-black/50 border border-blue-500/20 rounded-2xl p-6 hover:border-blue-500/40 transition-colors"
+                className="bg-linear-to-br from-blue-900/20 to-black/50 border border-blue-500/20 rounded-2xl p-6 hover:border-blue-500/40 transition-colors"
             >
                 <div className="flex items-center gap-3 mb-4">
                     <div className="p-2 bg-blue-500/10 rounded-lg">
@@ -122,7 +122,7 @@ const Stats = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.4 }}
-                className="bg-gradient-to-br from-cyan-900/20 to-black/50 border border-cyan-500/20 rounded-2xl p-6 hover:border-cyan-500/40 transition-colors"
+                className="bg-linear-to-br from-cyan-900/20 to-black/50 border border-cyan-500/20 rounded-2xl p-6 hover:border-cyan-500/40 transition-colors"
             >
                  <div className="flex items-center gap-3 mb-4">
                     <div className="p-2 bg-cyan-500/10 rounded-lg">
@@ -142,7 +142,7 @@ const Stats = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.5 }}
-                className="bg-gradient-to-br from-pink-900/20 to-black/50 border border-pink-500/20 rounded-2xl p-6 hover:border-pink-500/40 transition-colors"
+                className="bg-linear-to-br from-pink-900/20 to-black/50 border border-pink-500/20 rounded-2xl p-6 hover:border-pink-500/40 transition-colors"
             >
                 <div className="flex items-center gap-3 mb-4">
                     <div className="p-2 bg-pink-500/10 rounded-lg">

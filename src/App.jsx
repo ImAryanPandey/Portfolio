@@ -5,6 +5,7 @@ import Stats from './components/Stats';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import ArcBot from './components/ArcBot';
+import { Analytics } from '@vercel/analytics/react';
 
 function App() {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -28,6 +29,7 @@ function App() {
         onClose={() => setIsChatOpen(false)}
         onOpen={() => setIsChatOpen(true)}
       />
+      <Analytics />
     </Layout>
   );
 }

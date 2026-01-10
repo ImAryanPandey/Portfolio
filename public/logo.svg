@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <path d="M50 5 L93.3 30 V80 L50 105 L6.7 80 V30 Z" fill="#050505" stroke="#333" stroke-width="2"/>
+  
+  <path d="M50 15 L85 35 V75 L50 95 L15 75 V35 Z" fill="none" stroke="#dc2626" stroke-width="4" stroke-opacity="0.9">
+    <animate attributeName="stroke-opacity" values="0.9;0.4;0.9" dur="3s" repeatCount="indefinite" />
+  </path>
+
+  <path d="M50 25 L75 80 H60 L50 55 L40 80 H25 Z" fill="#e5e5e5" />
+  
+  <circle cx="50" cy="55" r="4" fill="#dc2626" />
+</svg>

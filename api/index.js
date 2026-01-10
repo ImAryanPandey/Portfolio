@@ -4,6 +4,7 @@
 import express from 'express';
 import cors from 'cors';
 import projectRoutes from './routes/projectRoutes.js';
+import chatRoutes from './routes/chatRoutes.js';
 
 const app = express();
 
@@ -11,6 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/projects', projectRoutes);
+app.use('/api/chat', chatRoutes);
 
 app.get('/api/health', (req, res) => {
     res.json({ status: "System Online", mode: "GitHub Sync Active" });

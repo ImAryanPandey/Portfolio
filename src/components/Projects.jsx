@@ -1,22 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Github, ExternalLink, Star, GitFork, Clock } from 'lucide-react';
+import { Github, ExternalLink, Star, GitFork, Clock, AlertCircle } from 'lucide-react';
 
 const Projects = () => {
   const [projects, setProjects] = useState({ featured: [], latest: [] });
   const [activeTab, setActiveTab] = useState('featured');
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchProjects = async () => {
       try {
         const response = await fetch('/api/projects');
+
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.indexOf('application/json') === -1) {
+          throw new Error('Received HTML instead of JSON. Check Vite Proxy config.');
+        }
+
         const data = await response.json();
         if (data.success) {
           setProjects(data.data);
+        } else {
+          setError('Backend reported an error.');
         }
       } catch (error) {
-        console.error("Error fetching projects:", error);
+        console.error('Error fetching projects:', error);
+        setError(error.message);
       } finally {
         setLoading(false);
       }
@@ -42,121 +52,155 @@ const Projects = () => {
             <div className="h-1 w-20 bg-red-500 rounded-full"></div>
           </motion.div>
 
-          <div className="flex bg-[#0F0F11] border border-white/10 rounded-lg p-1">
-            <button
-              onClick={() => setActiveTab('featured')}
-              className={`px-4 py-2 text-sm font-medium rounded-md transition-all ${activeTab === 'featured' ? 'bg-white/10 text-white' : 'text-gray-400 hover:text-white'}`}
-            >
-              Featured
-            </button>
-            <button
-              onClick={() => setActiveTab('latest')}
-              className={`px-4 py-2 text-sm font-medium rounded-md transition-all ${activeTab === 'latest' ? 'bg-white/10 text-white' : 'text-gray-400 hover:text-white'}`}
-            >
-              Latest Activity
-            </button>
+          <div className="flex bg-[#0F0F11] border border-white/10 rounded-lg p-1 self-start md:self-auto">
+            {['featured', 'latest'].map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`px-4 py-2 text-sm font-medium rounded-md transition-all capitalize whitespace-nowrap ${
+                  activeTab === tab
+                    ? 'bg-white/10 text-white'
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                {tab === 'latest' ? 'Latest Activity' : tab}
+              </button>
+            ))}
           </div>
         </div>
+
+        {error && (
+          <div className="p-4 border border-red-500/50 bg-red-500/10 rounded-lg text-red-200 flex items-center gap-2 mb-8">
+            <AlertCircle size={20} />
+            <span>Error: {error} (Check if backend is running on port 3000)</span>
+          </div>
+        )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <AnimatePresence mode="wait">
             {loading ? (
-              [1, 2, 3].map((n) => (
-                <div
-                  key={n}
-                  className="h-96 bg-white/5 rounded-2xl animate-pulse border border-white/5"
-                ></div>
-              ))
+              <motion.div
+                key="loader"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="col-span-full grid grid-cols-1 md:grid-cols-3 gap-8"
+              >
+                {[1, 2, 3].map((n) => (
+                  <div
+                    key={n}
+                    className="h-96 bg-white/5 rounded-2xl animate-pulse border border-white/5"
+                  ></div>
+                ))}
+              </motion.div>
             ) : (
-              activeList?.map((project, index) => (
-                <motion.div
-                  key={project.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3, delay: index * 0.1 }}
-                  className="group bg-[#0F0F11] border border-white/10 rounded-2xl overflow-hidden hover:border-white/20 transition-all flex flex-col relative"
-                >
-                  {project.image && (
-                    <div className="absolute inset-0 z-0">
-                      <img
-                        src={project.image}
-                        alt="preview"
-                        className="w-full h-full object-cover opacity-10 group-hover:opacity-20 transition-opacity blur-sm"
-                      />
-                      <div className="absolute inset-0 bg-linear-to-t from-[#0F0F11] via-[#0F0F11]/90 to-transparent"></div>
-                    </div>
-                  )}
+              <motion.div
+                key={activeTab}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+                className="contents"
+              >
+                {activeList && activeList.length === 0 && (
+                  <div className="col-span-full py-20 text-center text-gray-500 border border-dashed border-white/10 rounded-2xl">
+                    <p>No projects found in this category.</p>
+                    {activeTab === 'featured' && (
+                      <p className="text-xs mt-2">
+                        (Pin repositories on GitHub to see them here)
+                      </p>
+                    )}
+                  </div>
+                )}
 
-                  <div className="relative z-10 p-6 flex flex-col flex-1">
-                    <div className="flex justify-between items-start mb-4">
-                      <div className="flex gap-2">
-                        <span
-                          className="text-[10px] font-mono px-2 py-1 rounded border border-white/10 bg-black/50 text-gray-300"
-                          style={{ borderColor: `${project.stats.langColor}40` }}
-                        >
-                          <span style={{ color: project.stats.langColor }} className="mr-1">
-                            ●
+                {activeList?.map((project) => (
+                  <div
+                    key={project.id}
+                    className="group bg-[#0F0F11] border border-white/10 rounded-2xl overflow-hidden hover:border-white/20 transition-all flex flex-col relative h-full"
+                  >
+                    {project.image && (
+                      <div className="absolute inset-0 z-0">
+                        <img
+                          src={project.image}
+                          alt="preview"
+                          className="w-full h-full object-cover opacity-10 group-hover:opacity-20 transition-opacity blur-sm"
+                        />
+                        <div className="absolute inset-0 bg-linear-to-t from-[#0F0F11] via-[#0F0F11]/90 to-transparent"></div>
+                      </div>
+                    )}
+
+                    <div className="relative z-10 p-6 flex flex-col flex-1">
+                      <div className="flex justify-between items-start mb-4">
+                        <div className="flex gap-2">
+                          <span
+                            className="text-[10px] font-mono px-2 py-1 rounded border border-white/10 bg-black/50 text-gray-300"
+                            style={{ borderColor: `${project.stats.langColor}40` }}
+                          >
+                            <span
+                              style={{ color: project.stats.langColor }}
+                              className="mr-1"
+                            >
+                              ●
+                            </span>
+                            {project.stats.lang}
                           </span>
-                          {project.stats.lang}
-                        </span>
-                        <span className="text-[10px] font-mono px-2 py-1 rounded border border-white/10 bg-black/50 text-gray-300 flex items-center gap-1">
-                          <Clock size={10} /> {project.stats.updated}
-                        </span>
+                          <span className="text-[10px] font-mono px-2 py-1 rounded border border-white/10 bg-black/50 text-gray-300 flex items-center gap-1">
+                            <Clock size={10} /> {project.stats.updated}
+                          </span>
+                        </div>
+                        <div className="flex gap-2 text-gray-500">
+                          {project.stats.stars > 0 && (
+                            <span className="flex items-center gap-1 text-xs">
+                              <Star size={12} /> {project.stats.stars}
+                            </span>
+                          )}
+                          {project.stats.forks > 0 && (
+                            <span className="flex items-center gap-1 text-xs">
+                              <GitFork size={12} /> {project.stats.forks}
+                            </span>
+                          )}
+                        </div>
                       </div>
 
-                      <div className="flex gap-2 text-gray-500">
-                        {project.stats.stars > 0 && (
-                          <span className="flex items-center gap-1 text-xs">
-                            <Star size={12} /> {project.stats.stars}
+                      <h3 className="text-xl font-bold text-white mb-2 group-hover:text-red-400 transition-colors">
+                        {project.title}
+                      </h3>
+                      <p className="text-gray-400 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">
+                        {project.description}
+                      </p>
+
+                      <div className="flex flex-wrap gap-2 mb-6">
+                        {project.tech.map((t, i) => (
+                          <span key={i} className="text-xs text-gray-500">
+                            #{t}
                           </span>
-                        )}
-                        {project.stats.forks > 0 && (
-                          <span className="flex items-center gap-1 text-xs">
-                            <GitFork size={12} /> {project.stats.forks}
-                          </span>
-                        )}
+                        ))}
                       </div>
-                    </div>
 
-                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-red-400 transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-gray-400 text-sm leading-relaxed mb-6 flex-1 line-clamp-3">
-                      {project.description}
-                    </p>
-
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      {project.tech.map((t, i) => (
-                        <span key={i} className="text-xs text-gray-500">
-                          #{t}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="flex gap-3 mt-auto">
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg bg-white text-black font-semibold text-sm hover:bg-gray-200 transition-colors"
-                      >
-                        <Github size={16} /> Code
-                      </a>
-                      {project.demo && (
+                      <div className="flex gap-3 mt-auto">
                         <a
-                          href={project.demo}
+                          href={project.github}
                           target="_blank"
                           rel="noreferrer"
-                          className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg border border-white/10 text-white font-medium text-sm hover:bg-white/5 transition-colors"
+                          className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg bg-white text-black font-semibold text-sm hover:bg-gray-200 transition-colors"
                         >
-                          <ExternalLink size={16} /> Live
+                          <Github size={16} /> Code
                         </a>
-                      )}
+                        {project.demo && (
+                          <a
+                            href={project.demo}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg border border-white/10 text-white font-medium text-sm hover:bg-white/5 transition-colors"
+                          >
+                            <ExternalLink size={16} /> Live
+                          </a>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </motion.div>
-              ))
+                ))}
+              </motion.div>
             )}
           </AnimatePresence>
         </div>

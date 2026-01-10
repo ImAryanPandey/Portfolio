@@ -6,7 +6,7 @@ const ArcBot = ({ isOpen, onClose, onOpen }) => {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState([
     { type: 'system', content: 'ARC SYSTEM v2.0 [ONLINE]' },
-    { type: 'bot', content: 'Identity confirmed: System ARC. \nConnected to Aryan\'s Neural Link. \nState your query.' }
+    { type: 'bot', content: 'System ARC Online. \nHow can I assist you with Aryan\'s portfolio today?' }
   ]);
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef(null);
@@ -33,8 +33,10 @@ const ArcBot = ({ isOpen, onClose, onOpen }) => {
     setLoading(true);
 
     try {
+      // Filter out the welcome message (index 0) and system messages for the API
       const apiHistory = history
         .filter(msg => msg.type !== 'system')
+        .filter((_, index) => index !== 0) 
         .map(msg => ({
           role: msg.type === 'user' ? 'user' : 'model',
           parts: [{ text: msg.content }]
@@ -104,7 +106,8 @@ const ArcBot = ({ isOpen, onClose, onOpen }) => {
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar bg-black/40">
+            {/* SCROLLBAR REMOVED HERE using Tailwind arbitrary values */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-black/40 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
               {history.map((msg, i) => (
                 <div key={i} className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div

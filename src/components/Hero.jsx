@@ -2,7 +2,12 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Terminal } from 'lucide-react';
 
-const Hero = () => {
+const Hero = ({ onOpenChat }) => {
+  const scrollToProjects = () => {
+    const element = document.getElementById('projects');
+    if (element) element.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <section className="min-h-[85vh] flex items-center justify-center relative overflow-hidden">
       <div className="grid md:grid-cols-2 gap-12 items-center w-full">
@@ -49,13 +54,19 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="flex flex-wrap gap-4 pt-4"
           >
-            <button className="group relative px-6 py-3 bg-white text-black font-semibold rounded-lg overflow-hidden transition-all hover:bg-gray-200">
+            <button
+              onClick={scrollToProjects}
+              className="group relative px-6 py-3 bg-white text-black font-semibold rounded-lg overflow-hidden transition-all hover:bg-gray-200 cursor-pointer"
+            >
               <span className="relative z-10 flex items-center gap-2">
                 View Work <ArrowRight size={18} />
               </span>
             </button>
 
-            <button className="px-6 py-3 border border-white/10 rounded-lg text-white hover:bg-white/5 transition-all">
+            <button
+              onClick={onOpenChat}
+              className="px-6 py-3 border border-white/10 rounded-lg text-white hover:bg-white/5 transition-all cursor-pointer"
+            >
               Initialize Chat
             </button>
           </motion.div>

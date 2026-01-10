@@ -1,5 +1,5 @@
 import React from 'react';
-import { Github, ExternalLink, Code2 } from 'lucide-react';
+import { Github, Code2 } from 'lucide-react';
 
 const Navbar = () => {
   return (
@@ -17,13 +17,13 @@ const Navbar = () => {
 
           <div className="flex items-center gap-6">
             <a
-              href="#"
+              href="#projects"
               className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
             >
               Projects
             </a>
             <a
-              href="#"
+              href="#about"
               className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
             >
               About

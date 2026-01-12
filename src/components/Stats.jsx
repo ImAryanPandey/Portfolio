@@ -22,7 +22,7 @@ const Stats = () => {
         {/* THE 6-TILE BENTO GRID */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(180px,auto)]">
 
-            {/* TILE 1: THE ARCHITECT (Top Left - Spans 2 Cols) */}
+            {/* TILE 1: THE ENGINEER (Top Left - Spans 2 Cols) */}
             <motion.div 
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -33,13 +33,13 @@ const Stats = () => {
                     <Zap size={120} />
                 </div>
                 <div className="relative z-10">
-                    <h3 className="text-2xl font-bold text-white mb-2">The Architect</h3>
+                    <h3 className="text-2xl font-bold text-white mb-2">The Engineer</h3>
                     <p className="text-gray-300 text-sm md:text-base leading-relaxed mt-4 max-w-lg">
                         I bridge the gap between complex backend logic and smooth user experiences. 
-                        As a CS Graduate (2025), I design systems that scale.
+                        As a CS Graduate (2025), I build efficient, structured code.
                         <br/>
                         <span className="text-red-400 font-medium text-xs mt-3 block">
-                             FOCUS: SCALABILITY • SECURITY • REAL-TIME SYSTEMS
+                             FOCUS: PERFORMANCE • API DESIGN • DATA INTEGRITY
                         </span>
                     </p>
                 </div>
@@ -116,7 +116,7 @@ const Stats = () => {
                 </p>
             </motion.div>
 
-            {/* TILE 5: THE PHILOSOPHY (The Mindset) - RESTORED */}
+            {/* TILE 5: THE PHILOSOPHY (The Mindset) */}
             <motion.div 
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}

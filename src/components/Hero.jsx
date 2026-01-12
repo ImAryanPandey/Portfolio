@@ -29,10 +29,20 @@ const Hero = ({ onOpenChat }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-5xl md:text-7xl font-bold tracking-tight text-white leading-[1.1]"
+            className="font-bold tracking-tight leading-none"
           >
-            FULL STACK. <br />
-            <span className="text-transparent bg-clip-text bg-linear-to-r from-red-500 to-orange-600">
+            {/* LINE 1: BIGGEST (The Role) */}
+            <span className="block text-5xl md:text-7xl text-white mb-4">
+              SOFTWARE ENGINEER.
+            </span>
+            
+            {/* LINE 2: MEDIUM (The Stack) - Darker White/Grey */}
+            <span className="block text-3xl md:text-5xl text-gray-400 mb-2">
+              FULL STACK.
+            </span>
+
+            {/* LINE 3: MEDIUM (The Edge) - Gradient Red */}
+            <span className="block text-3xl md:text-5xl text-transparent bg-clip-text bg-linear-to-r from-red-500 to-orange-600">
               BACKEND HEAVY.
             </span>
           </motion.h1>
@@ -41,11 +51,11 @@ const Hero = ({ onOpenChat }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-lg text-gray-400 max-w-lg leading-relaxed"
+            className="text-lg text-gray-400 max-w-lg leading-relaxed pt-2"
           >
-            I architect scalable systems that don't crash.
-            Specialized in Node.js, High-Performance Databases,
-            and breaking things just to fix them better.
+            I build robust web applications with a focus on logic.
+            Specialized in Node.js, Database Optimization,
+            and writing clean, maintainable code.
           </motion.p>
 
           <motion.div
@@ -88,7 +98,7 @@ const Hero = ({ onOpenChat }) => {
                 <div className="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50"></div>
               </div>
               <div className="text-xs text-gray-500 font-mono ml-2 flex items-center gap-1">
-                <Terminal size={12} /> aryan@system-arc:~/portfolio
+                <Terminal size={12} /> aryan@backend-core:~/portfolio
               </div>
             </div>
 
@@ -96,14 +106,14 @@ const Hero = ({ onOpenChat }) => {
               <div className="flex gap-2">
                 <span className="text-green-500">➜</span>
                 <span className="text-blue-400">~</span>
-                <span className="text-gray-300">npx start-system</span>
+                <span className="text-gray-300">npx start-engine</span>
               </div>
-              <div className="text-gray-500 animate-pulse">Installing dependencies...</div>
+              <div className="text-gray-500 animate-pulse">Initializing backend services...</div>
               <div className="text-gray-400">
-                <span className="text-green-500">✔</span> Core: <span className="text-white">Node.js v20</span><br />
+                <span className="text-green-500">✔</span> Core: <span className="text-white">Node.js v24</span><br />
                 <span className="text-green-500">✔</span> Framework: <span className="text-white">Express</span><br />
                 <span className="text-green-500">✔</span> Database: <span className="text-white">MongoDB</span><br />
-                <span className="text-green-500">✔</span> Status: <span className="text-red-500">READY_TO_DEPLOY</span>
+                <span className="text-green-500">✔</span> Status: <span className="text-red-500">ONLINE</span>
               </div>
             </div>
           </div>
